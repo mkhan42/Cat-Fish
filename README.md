@@ -12,3 +12,5 @@ Technologies Used
 -Canvas
 
 WireFrames and PseudoCode
+![Wireframe](https://user-images.githubusercontent.com/76133352/169736219-06f6f6bd-6243-466b-9a34-577a6febe6ae.png)
+![Psedocode](https://user-images.githubusercontent.com/76133352/169736239-bfacce13-14f2-4387-85c4-9a433ac64bb9.png)
