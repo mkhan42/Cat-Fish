@@ -6,7 +6,7 @@ This project is our first project for General Assembly's Software Engineering Im
 To play the game, the user will have to use the right, left, up, and down arrow keys on their computers to navigate across the game board.
 
 Technologies Used
--HTML
+-HTML 
 -CSS
 -JavaScript (regular JS logic and DOM manipulation)
 -Canvas
