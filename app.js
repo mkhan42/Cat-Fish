@@ -1,22 +1,18 @@
 let canvas = document.querySelector("#canvas");
 let ctx = canvas.getContext("2d"); // this creates a 2 dimensional canvas
-// canvas.setAttribute("height", getComputedStyle(canvas)["height"]);
-// canvas.setAttribute("width", getComputedStyle(canvas)["width"]);
-// let score = document.querySelector('#score');
-// let movement = document.querySelector('#movement');
-let window_height = window.innerHeight;
-let window_width = window.innerWidth;
 let buddy;
 
-canvas.width = window_width;
-canvas.height = window_height;
+// canvas.width = window_width;
+// canvas.height = window_height;
 
-canvas.style.background = '#ff8';
+// window_height = 50;
+
+canvas.style.background = '#571FF1';
 
 const buddyImage = new Image();
-buddyImage.src = "images/Untitled_Artwork.png";
+buddyImage.src = "images/grinning-cat-face.png";
 
-class LilBuddy {
+class Characters {
     constructor(url, x, y, width, height) {
     this.url = url;
     this.x = x;
@@ -26,13 +22,14 @@ class LilBuddy {
     this.alive = true;
     this.render = function () {
       ctx.drawImage(this.url, this.x, this.y, this.width, this.height);
-    }
+    };
     };
   }
 
+  window.addEventListener("DOMContentLoaded", function(){
 
-  window.addEventListener("DOMContentLoaded", function (e){
-    buddy = new LilBuddy(buddyImage, 100, 20, 500, 500);
+    buddy = new Characters(buddyImage, 100, 20, 20, 20);
+    ctx.imageSmoothingEnabled = false
     buddy.render();
 
 })
