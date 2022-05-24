@@ -142,6 +142,7 @@ function enemyMove() {
 
   if(enemyYPos > canvas.height) {
     enemyYPos = 0 - enemySize;
+    enemyXPos = Math.floor(Math.random()*(canvas.width - enemySize))
   }
 
 }
