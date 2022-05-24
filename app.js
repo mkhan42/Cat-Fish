@@ -1,7 +1,8 @@
 let canvas = document.querySelector("#canvas");
-let ctx = canvas.getContext("2d"); // this creates a 2 dimensional canvas
+let ctx = canvas.getContext("2d");
 let cat;
 let fish;
+let fishArr = [];
 
 canvas.style.background = '#571FF1';
 canvas.style.border = '8px solid #54123B';
@@ -38,10 +39,8 @@ class Player {
     };
   }
 
-  // let fishXPos = Math.random() * 100;
-  // let fishYPos = Math.random() * 100;
-  let fishXPos = 10;
-  let fishYPos = 10;
+  let fishXPos = Math.floor(Math.random() * 100);
+  let fishYPos = Math.floor(Math.random() * 100);
 
 //   setInterval(fishImage.addEventListener("load", function(e){
 //     fish = new Characters(fishImage, fishXPos, fishYPos, 15, 15);
@@ -51,28 +50,17 @@ class Player {
 
 window.addEventListener("DOMContentLoaded", function(e){
   cat = new Player(catImage, 0, 130, 20, 20);
-  //fish = new Characters(fishImage, fishXPos, fishYPos, 15, 15);
-  // for(let i =0; i < 20; i++) {
-    //fish = new Characters(fishImage, fishXPos, fishYPos, 15, 15);
-  // }
+
+  for(let i = 0; i < 30; i++) {
+    let fishXPos = Math.floor(Math.random() * 100);
+    let fishYPos = Math.floor(Math.random() * 100);
+    fish = new Fishies(fishXPos * 2.8, fishYPos, 15, 15);
+    fishArr.push(fish);
+    //console.log(fishArr);
+  }
   ctx.imageSmoothingEnabled = false;
   const runGame = setInterval(gameLoop, 120);
 })
-
-// fish = new Fishies(145, 30, 30, 30)
-
-// const arrFishies = [];                              
-// function populateFishies() {
-//   for(let row = 0; row < 4; row++) {
-//      for(let col = 0; col < 9; col++){
-//       const fish = new Fishies (
-//         col * 35 + 33, row * 35 + 15, 30, 30)
-//         arrFishies.push(fish)
-//      }
-//   }
-// }
-
-populateFishies();
 
   function move(e){
     switch (e.key){
@@ -99,5 +87,9 @@ populateFishies();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     cat.render();
-    //fish.render();
+
+    fishArr.forEach(fish => {
+      //console.log(fish);
+      fish.render();
+    })
   }

@@ -8,6 +8,10 @@ body {
     background-color: black;
 }
 
+h1 {
+    color: #F8CB2E;
+}
+
 canvas {
     width: 100%;
     height: 400px;
