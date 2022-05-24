@@ -4,7 +4,7 @@ let score = document.querySelector('#score');
 let cat;
 let fish;
 let fishArr = [];
-let fishXPos = Math.floor(Math.random() * 100);
+let fishXPos = Math.floor(Math.random() * (canvas.width - 15));
 let fishYPos = Math.floor(Math.random() * 100);
 let enemy;
 
@@ -75,7 +75,7 @@ class Player {
   //   }
   // }
 
-let enemyXPos = 0;
+let enemyXPos = Math.floor(Math.random() * (canvas.width - 15));
 let enemyYPos = 0;
 let enemyXSpeed = 5;
 let enemyYSpeed = 5;
@@ -104,9 +104,9 @@ const enemySize = 15;
 window.addEventListener("DOMContentLoaded", function(e){
   cat = new Player(0, 130, 20, 20);
   for(let i = 0; i < 30; i++) {
-    const fishXPos = Math.floor(Math.random() * 100);
+    const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
     const fishYPos = Math.floor(Math.random() * 100);
-    fish = new Fishies(fishXPos * 2.8, fishYPos, 15, 15);
+    fish = new Fishies(fishXPos, fishYPos, 15, 15);
     fishArr.push(fish);
     console.log(fish)
   }
