@@ -79,6 +79,7 @@ let enemyXPos = 0;
 let enemyYPos = 0;
 let enemyXSpeed = 5;
 let enemyYSpeed = 5;
+const enemySize = 15;
 
   class Enemy {
     constructor(x, y, width, height, speed) {
@@ -139,6 +140,10 @@ console.log(score);
 function enemyMove() {
   enemyYPos += enemyYSpeed;
 
+  if(enemyYPos > canvas.height) {
+    enemyYPos = 0 - enemySize;
+  }
+
 }
   
   function gameLoop() {
@@ -149,7 +154,7 @@ function enemyMove() {
       fishArr.forEach(fish => {
         fish.render();
     })
-    enemy = new Enemy(enemyXPos, enemyYPos, 15, 15)
+    enemy = new Enemy(enemyXPos, enemyYPos, enemySize, enemySize)
     enemy.render();
     enemyMove();
   }
