@@ -1,5 +1,6 @@
 let canvas = document.querySelector("#canvas");
 let ctx = canvas.getContext("2d");
+let score = document.querySelector('#score');
 let cat;
 let fish;
 let fishArr = [];
@@ -28,39 +29,43 @@ class Player {
   }
 
   class Fishies {
-    constructor(x, y, width, height) {
+    constructor(x, y, width, height, speed) {
     this.x = x;
     this.y = y;
     this.height = height;
     this.width = width;
+    this.alive = true;
+
+    this.speed = speed;
+
+    this.dx = 1 * this.speed;
+    this.dy = 1 * this.speed;
     this.render = function () {
       ctx.drawImage(fishImage, this.x, this.y, this.width, this.height);
     };
     };
+
   }
 
   let fishXPos = Math.floor(Math.random() * 100);
   let fishYPos = Math.floor(Math.random() * 100);
 
-//   setInterval(fishImage.addEventListener("load", function(e){
-//     fish = new Characters(fishImage, fishXPos, fishYPos, 15, 15);
-//     ctx.imageSmoothingEnabled = false;
-//     fish.render();
-// }), 1000)
-
 window.addEventListener("DOMContentLoaded", function(e){
   cat = new Player(catImage, 0, 130, 20, 20);
-
+  ctx.imageSmoothingEnabled = false;
+  //const playGame = setInterval(gameLoop, 100);
   for(let i = 0; i < 30; i++) {
-    let fishXPos = Math.floor(Math.random() * 100);
-    let fishYPos = Math.floor(Math.random() * 100);
+    const fishXPos = Math.floor(Math.random() * 100);
+    const fishYPos = Math.floor(Math.random() * 100);
     fish = new Fishies(fishXPos * 2.8, fishYPos, 15, 15);
     fishArr.push(fish);
+    console.log(fish)
     //console.log(fishArr);
   }
-  ctx.imageSmoothingEnabled = false;
-  const runGame = setInterval(gameLoop, 120);
+      //console.log(fish)
+
 })
+
 
   function move(e){
     switch (e.key){
@@ -80,7 +85,7 @@ window.addEventListener("DOMContentLoaded", function(e){
   
   }
 
-  document.addEventListener("keydown", move)
+  
 
   
   function gameLoop() {
@@ -89,7 +94,13 @@ window.addEventListener("DOMContentLoaded", function(e){
     cat.render();
 
     fishArr.forEach(fish => {
-      //console.log(fish);
       fish.render();
     })
   }
+
+  let varName = setInterval(gameLoop, 100);
+
+  document.addEventListener("keydown", move)
+
+
+

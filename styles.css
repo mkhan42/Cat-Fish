@@ -17,6 +17,6 @@ canvas {
     height: 400px;
 }
 
-.score {
+#score {
     color: #F8CB2E;
 }
