@@ -101,6 +101,7 @@ window.addEventListener("DOMContentLoaded", function(e){
 
 console.log(score);
 
+
 function enemyFoodMove() {
 
   enemyFoods.forEach(function(food) {
@@ -115,19 +116,20 @@ function enemyFoodMove() {
     }
   
     if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
+      // ctx.clearRect(0, 0, canvas.width, canvas.height);
       console.log('hit');
+      stopGame();
       cat.x = 0;
       cat.y = 130;
       let gameLost = document.createElement('h3');
       gameLost.textContent = 'You lost!';
-      // gameStatus.appendChild(gameLost);
-      // body.appendChild(gameStatus)
   
     }
 
   });
 
 }
+
 
   
   function gameLoop() {
@@ -182,6 +184,10 @@ function enemyFoodMove() {
 
   let varName = setInterval(gameLoop, 100);
   document.addEventListener("keydown", move)
+
+  function stopGame() {
+    clearInterval(varName);
+  }
 
 
 
