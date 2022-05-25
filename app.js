@@ -21,6 +21,8 @@ fishImage.src = 'images/fish.png';
 const enemyImage = new Image();
 enemyImage.src = 'images/banana.png';
 
+const playerSize = 20;
+
 class Player {
     constructor(x, y, width, height, speed) {
     this.x = x;
@@ -53,28 +55,6 @@ class Player {
     };
   }
 
-  // class Enemy {
-  //   constructor(x, y, color, width, height, speed){
-  //       this.x = x;
-  //       this.y = y;
-  //       this.color = color;
-  //       this.height = height;
-  //       this.width = width; 
-  //       this.alive = true;
-  //       this.speed = speed;
-
-  //       // this.dx = 1 * this.speed;
-  //       // this.dy = 1 * this.speed;
-
-
-  //   }
-
-  //   render() {
-  //       ctx.fillStyle = this.color;
-  //       ctx.fillRect(this.x, this.y, this.width, this.height)
-  //   }
-  // }
-
 let enemyXPos = Math.floor(Math.random() * (canvas.width - 15));
 let enemyYPos = 0;
 let enemyXSpeed = 5;
@@ -102,7 +82,7 @@ const enemySize = 15;
 
 
 window.addEventListener("DOMContentLoaded", function(e){
-  cat = new Player(0, 130, 20, 20);
+  cat = new Player(0, 130, playerSize, playerSize);
   for(let i = 0; i < 30; i++) {
     const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
     const fishYPos = Math.floor(Math.random() * 100);
@@ -143,6 +123,12 @@ function enemyMove() {
   if(enemyYPos > canvas.height) {
     enemyYPos = 0 - enemySize;
     enemyXPos = Math.floor(Math.random()*(canvas.width - enemySize))
+    enemyYSpeed = Math.floor(Math.random()*(4 - 2) + 2)
+  }
+
+  if(enemyYPos + enemySize > cat.y && enemyYPos < cat.y + playerSize) {
+    console.log('hit');
+
   }
 
 }
