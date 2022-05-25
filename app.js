@@ -1,6 +1,7 @@
 let canvas = document.querySelector("#canvas");
 let ctx = canvas.getContext("2d");
 let score = document.querySelector('#score');
+let scoreCount = 50;
 let gameStatus = document.querySelector('#game-status')
 let cat;
 let fish;
@@ -48,18 +49,21 @@ class Player {
   }
 
   class Fishies {
-    constructor(x, y, width, height, speed) {
+    constructor(x, y, width, height, id) {
     this.x = x;
     this.y = y;
     this.height = height;
     this.width = width;
     this.alive = true;
+    this.id = id;
+    //this.speed = speed;
+    
+    //this.status = 1;
 
-    this.speed = speed;
-
-    // this.dx = 1 * this.speed;
-    // this.dy = 1 * this.speed;
+    this.dx = 1 * this.speed;
+    this.dy = 1 * this.speed;
     this.render = function () {
+      //if(this.status)
       ctx.drawImage(fishImage, this.x, this.y, this.width, this.height);
     };
     };
@@ -71,7 +75,7 @@ window.addEventListener("DOMContentLoaded", function(e){
   for(let i = 0; i < 30; i++) {
     const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
     const fishYPos = Math.floor(Math.random() * 100);
-    fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize);
+    fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
     fishArr.push(fish);
     console.log(fish)
   }
@@ -97,9 +101,6 @@ window.addEventListener("DOMContentLoaded", function(e){
     }
   
   }
-
-
-
 console.log(score);
 
 
@@ -111,7 +112,7 @@ function enemyFoodMove() {
     if(food.foodYPos > canvas.height) {
       food.foodYPos = 0 - food.foodSize;
 
-      let foodEnemyPos = Math.floor(Math.random() * 4) + 1;
+      let foodEnemyPos = Math.floor(Math.random() * 6) + 1;
       food.foodXPos = foodEnemyPos * (canvas.width / 6);
       food.foodYSpeed = Math.floor(Math.random()*(12 - 4) + 4)
     }
@@ -132,23 +133,17 @@ function enemyFoodMove() {
 }
 
 function fishCollision() {
-
-  // console.log(fishYPos);
-  // console.log(cat.y);
   fishArr.forEach(fish => {
 
-  if(fish.y > cat.y - cat.height+8 && cat.x + cat.width > fish.x) {
-
-    // if(fish.y > fish.width && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
-    
+  if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
+    scoreCount += 50;
+    console.log(scoreCount);
+    const index = fishArr.indexOf(fish);
+    if (index > -1) {
+      fishArr.splice(index, 1);
+    }
     console.log('hit');
-    //stopGame();
-
   }
-
-  //if(fish.fishYPos + fish.fishSize > cat.y && fish.fishYPos < cat.y + playerSize && fish.fishXPos + fish.fishSize > cat.x && fish.fishXPos < cat.x + playerSize)
-
-
   });
 }
 
@@ -162,7 +157,7 @@ function fishCollision() {
 
 
       fishArr.forEach(fish => {
-        fish.render();
+          fish.render();
     })
 
     if(startingPos) {
@@ -178,7 +173,7 @@ function fishCollision() {
   }
 
   function makeEnemyFood() {
-    let foodEnemyPos = Math.floor(Math.random() * 4) + 1;
+    let foodEnemyPos = Math.floor(Math.random() * 6) + 1;
     const foodSize = 15;
     let foodXPos = foodEnemyPos * (canvas.width / 6);
     let foodYPos = 0 - foodSize;
@@ -201,7 +196,7 @@ function fishCollision() {
   }
 
   function drawEnemyFood() {
-    enemyFoods.forEach(function(food, i) {
+    enemyFoods.forEach(function(food) {
       ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
     })
   }
