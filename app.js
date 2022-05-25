@@ -1,17 +1,12 @@
 let canvas = document.querySelector("#canvas");
 let ctx = canvas.getContext("2d");
-let score = document.querySelector('#score');
-let scoreCount = 50;
-let gameStatus = document.querySelector('#game-status')
+let score = document.querySelector('#fish-score');
 let cat;
 let fish;
 let fishArr = [];
 let fishXPos = Math.floor(Math.random() * (canvas.width - 15));
 let fishYPos = Math.floor(Math.random() * 100);
 const fishSize = 15;
-
-
-
 canvas.style.background = '#571FF1';
 canvas.style.border = '8px solid #54123B';
 
@@ -35,13 +30,12 @@ let enemyFoods = [];
 const playerSize = 20;
 
 class Player {
-    constructor(x, y, width, height, speed) {
+    constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
     this.height = height;
     this.width = width;
     this.alive = true;
-    this.speed = speed;
     this.render = function () {
       ctx.drawImage(catImage, this.x, this.y, this.width, this.height);
     };
@@ -56,14 +50,7 @@ class Player {
     this.width = width;
     this.alive = true;
     this.id = id;
-    //this.speed = speed;
-    
-    //this.status = 1;
-
-    this.dx = 1 * this.speed;
-    this.dy = 1 * this.speed;
     this.render = function () {
-      //if(this.status)
       ctx.drawImage(fishImage, this.x, this.y, this.width, this.height);
     };
     };
@@ -101,7 +88,6 @@ window.addEventListener("DOMContentLoaded", function(e){
     }
   
   }
-console.log(score);
 
 
 function enemyFoodMove() {
@@ -136,8 +122,13 @@ function fishCollision() {
   fishArr.forEach(fish => {
 
   if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
-    scoreCount += 50;
-    console.log(scoreCount);
+    let gameScore = Number(score.textContent);
+    let newScore = gameScore + 50;
+        score.textContent = newScore;
+        if(newScore === 1550) {
+          score.textContent = "You win!";
+          stopGame();
+        }
     const index = fishArr.indexOf(fish);
     if (index > -1) {
       fishArr.splice(index, 1);
