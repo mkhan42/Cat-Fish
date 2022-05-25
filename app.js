@@ -1,6 +1,7 @@
 let canvas = document.querySelector("#canvas");
 let ctx = canvas.getContext("2d");
 let score = document.querySelector('#fish-score');
+let scoreId = document.querySelector('#score')
 let cat;
 let fish;
 let fishArr = [];
@@ -67,7 +68,6 @@ window.addEventListener("DOMContentLoaded", function(e){
     console.log(fish)
   }
   ctx.imageSmoothingEnabled = false;
-
 })
 
 
@@ -104,13 +104,11 @@ function enemyFoodMove() {
     }
   
     if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
-      // ctx.clearRect(0, 0, canvas.width, canvas.height);
       console.log('hit');
       stopGame();
-      cat.x = 0;
-      cat.y = 130;
       let gameLost = document.createElement('h3');
       gameLost.textContent = 'You lost!';
+      scoreId.appendChild(gameLost)
   
     }
 
@@ -122,18 +120,21 @@ function fishCollision() {
   fishArr.forEach(fish => {
 
   if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
-    let gameScore = Number(score.textContent);
-    let newScore = gameScore + 50;
-        score.textContent = newScore;
-        if(newScore === 1550) {
-          score.textContent = "You win!";
-          stopGame();
-        }
     const index = fishArr.indexOf(fish);
     if (index > -1) {
       fishArr.splice(index, 1);
     }
     console.log('hit');
+
+    let gameScore = Number(score.textContent);
+    let newScore = gameScore + 50;
+        score.textContent = newScore;
+        if(fishArr.length === 0 && newScore === 1500) {
+          let gameWon = document.createElement('h3');
+          gameWon.textContent = 'You Win!';
+          scoreId.appendChild(gameLost)
+          stopGame();
+        }
   }
   });
 }
