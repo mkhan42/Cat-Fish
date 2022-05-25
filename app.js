@@ -109,6 +109,9 @@ function enemyFoodMove() {
       let gameLost = document.createElement('h3');
       gameLost.textContent = 'You lost!';
       scoreId.appendChild(gameLost)
+      let playAgain = document.createElement('button');
+          playAgain.innerHTML = 'Play Again?'
+          scoreId.appendChild(playAgain)
   
     }
 
@@ -134,6 +137,9 @@ function fishCollision() {
           gameWon.textContent = 'You Win!';
           scoreId.appendChild(gameLost)
           stopGame();
+          let playAgain = document.createElement('button');
+          playAgain = setAttribute('id', 'play-again');
+          scoreId.appendChild(playAgain)
         }
   }
   });
