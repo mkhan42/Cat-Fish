@@ -7,6 +7,7 @@ let fish;
 let fishArr = [];
 let fishXPos = Math.floor(Math.random() * (canvas.width - 15));
 let fishYPos = Math.floor(Math.random() * 100);
+const fishSize = 15;
 
 
 
@@ -70,7 +71,7 @@ window.addEventListener("DOMContentLoaded", function(e){
   for(let i = 0; i < 30; i++) {
     const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
     const fishYPos = Math.floor(Math.random() * 100);
-    fish = new Fishies(fishXPos, fishYPos, 15, 15);
+    fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize);
     fishArr.push(fish);
     console.log(fish)
   }
@@ -110,7 +111,7 @@ function enemyFoodMove() {
     if(food.foodYPos > canvas.height) {
       food.foodYPos = 0 - food.foodSize;
 
-      let foodEnemyPos = Math.floor(Math.random() * 3) + 1;
+      let foodEnemyPos = Math.floor(Math.random() * 4) + 1;
       food.foodXPos = foodEnemyPos * (canvas.width / 6);
       food.foodYSpeed = Math.floor(Math.random()*(12 - 4) + 4)
     }
@@ -130,6 +131,28 @@ function enemyFoodMove() {
 
 }
 
+function fishCollision() {
+
+  // console.log(fishYPos);
+  // console.log(cat.y);
+  fishArr.forEach(fish => {
+
+  if(fish.y > cat.y - cat.height+8 && cat.x + cat.width > fish.x) {
+
+    // if(fish.y > fish.width && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
+    
+    console.log('hit');
+    //stopGame();
+
+  }
+
+  //if(fish.fishYPos + fish.fishSize > cat.y && fish.fishYPos < cat.y + playerSize && fish.fishXPos + fish.fishSize > cat.x && fish.fishXPos < cat.x + playerSize)
+
+
+  });
+}
+
+
 
   
   function gameLoop() {
@@ -137,23 +160,25 @@ function enemyFoodMove() {
 
     cat.render();
 
+
       fishArr.forEach(fish => {
         fish.render();
     })
+
     if(startingPos) {
       for(let i = 0; i < totalEnimies; i++) {
         makeEnemyFood();
       }
       startingPos = false;
     }
-
+    fishCollision();
     enemyFoodMove();
     drawEnemyFood();
 
   }
 
   function makeEnemyFood() {
-    let foodEnemyPos = Math.floor(Math.random() * 3) + 1;
+    let foodEnemyPos = Math.floor(Math.random() * 4) + 1;
     const foodSize = 15;
     let foodXPos = foodEnemyPos * (canvas.width / 6);
     let foodYPos = 0 - foodSize;
