@@ -2,12 +2,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background-size: cover; */
-    /* background-repeat: space; */
     text-align: center;
     background-color: black;
     font-family: 'Press Start 2P';
-    /* text-transform: uppercase; */
 }
 
 h1 {

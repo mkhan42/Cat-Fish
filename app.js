@@ -192,7 +192,7 @@ let gameStart = () => {
       playAgain.innerHTML = 'Play Again?'
       scoreId.appendChild(playAgain);
       playAgain.addEventListener('click', function() {
-        window.location='https://mkhan42.github.io/Cat-Catch/'
+        window.location='https://mkhan42.github.io/Cat-Fish/'
       })
     }
 }
