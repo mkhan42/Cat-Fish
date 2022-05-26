@@ -17,7 +17,7 @@ const catImage = new Image();
 catImage.src = "images/grinning-cat-face.png";
 
 const fishImage = new Image();
-fishImage.src = 'images/fish.png';
+fishImage.src = `images/fish${Math.floor(Math.random()*6)}.png`;
 
 let foodXPos = Math.floor(Math.random() * (canvas.width - 15));
 let foodYPos = 0;
@@ -81,14 +81,15 @@ class Player {
 let gameStart = () => {
   console.log("game start clicked")
     cat = new Player(0, 130, playerSize, playerSize);
-    for(let i = 0; i < 30; i++) {
+    ctx.imageSmoothingEnabled = false;
+    for(let i = 0; i < fishLength; i++) {
       const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
       const fishYPos = Math.floor(Math.random() * 100);
       fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
       fishArr.push(fish);
       console.log(fish)
+      ctx.imageSmoothingEnabled = false;
     }
-    ctx.imageSmoothingEnabled = false;
     //setInterval(gameLoop, 100);
 
     function move(e){
@@ -224,6 +225,7 @@ let gameStart = () => {
     function drawEnemyFood() {
       enemyFoods.forEach(function(food) {
         ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
+        ctx.imageSmoothingEnabled = false;
       })
     }
   
@@ -263,7 +265,19 @@ startBtn.addEventListener('click', () => {
   gameStart()
   // setInterval(gameLoop, 100);
   startBtn.style.display = 'none'
+  scoreId.style.display = 'block'
 })
+
+
+
+
+
+
+
+
+
+
+
 
 
 //   function move(e){

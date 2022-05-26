@@ -6,6 +6,7 @@ body {
     /* background-repeat: space; */
     text-align: center;
     background-color: black;
+    font-family: 'Press Start 2P';
 }
 
 h1 {
@@ -19,4 +20,5 @@ canvas {
 
 #score {
     color: #F8CB2E;
+    display: none;
 }
