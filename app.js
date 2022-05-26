@@ -82,7 +82,6 @@ let gameStart = () => {
       console.log(fish)
       ctx.imageSmoothingEnabled = false;
     }
-    //setInterval(gameLoop, 100);
 
     function move(e){
       switch (e.key){
@@ -118,18 +117,10 @@ let gameStart = () => {
     
       if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
         console.log('hit');
-        stopGame();
         let gameLost = document.createElement('h3');
         gameLost.textContent = 'You lost!';
         scoreId.appendChild(gameLost)
-        // let playAgain = document.createElement('button');
-        // playAgain.id = 'play-again'
-        // playAgain.innerHTML = 'Play Again?'
-        // scoreId.appendChild(playAgain);
-        // playAgain.addEventListener('click', function() {
-        //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //   setInterval(gameLoop, 100);
-        // })
+        stopGame();
       }
   
     });
@@ -140,14 +131,11 @@ let gameStart = () => {
   
   function fishCollision() {
     fishArr.forEach(fish => {
-  
-    //if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
       if(fish.y + fish.height > cat.y && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
       const index = fishArr.indexOf(fish);
       if (index > -1) {
         fishArr.splice(index, 1);
       }
-      console.log('hit');
   
       let gameScore = Number(score.textContent);
       let newScore = gameScore + 50;
@@ -157,10 +145,6 @@ let gameStart = () => {
             gameWon.textContent = 'You Win!';
             scoreId.appendChild(gameWon)
             stopGame();
-            console.log(fish);
-            // let playAgain = document.createElement('button');
-            // playAgain = setAttribute('id', 'play-again');
-            // scoreId.appendChild(playAgain)
           }
     }
     });
@@ -227,28 +211,13 @@ let gameStart = () => {
   
     function stopGame() {
       clearInterval(varName);
-      // let playAgain = document.createElement('button');
-      // playAgain.id = 'play-again'
-      // playAgain.innerHTML = 'Play Again?'
-      // scoreId.appendChild(playAgain);
-      // playAgain.addEventListener('click', function() {
-      //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-      //   fishArr.length = 0;
-      //   enemyFoods.length = 0;
-      //   setInterval(gameLoop, 100);
-      //   //gameLoop();
-      //   gameStart();
-      //   if(startingPos) {
-      //     for(let i = 0; i < totalEnimies; i++) {
-      //       makeEnemyFood();
-      //     }
-      //     startingPos = false;
-      //   }
-      //   fishCollision();
-      //   enemyFoodMove();
-      //   drawEnemyFood();
-      //   playAgain.style.display = 'none';
-      // })
+      let playAgain = document.createElement('button');
+      playAgain.id = 'play-again'
+      playAgain.innerHTML = 'Play Again?'
+      scoreId.appendChild(playAgain);
+      playAgain.addEventListener('click', function() {
+        window.location='https://mkhan42.github.io/Cat-Catch/'
+      })
     }
 }
 
