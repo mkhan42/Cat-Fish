@@ -151,7 +151,8 @@ function enemyFoodMove() {
 function fishCollision() {
   fishArr.forEach(fish => {
 
-  if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
+  //if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
+    if(fish.y + fish.height > cat.y && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
     const index = fishArr.indexOf(fish);
     if (index > -1) {
       fishArr.splice(index, 1);
