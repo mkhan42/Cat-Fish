@@ -66,195 +66,353 @@ class Player {
   let fishLength = generateRandomInteger(30, 100);
 
 
-window.addEventListener("DOMContentLoaded", function(e){
-  cat = new Player(0, 130, playerSize, playerSize);
-  for(let i = 0; i < fishLength; i++) {
-    const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
-    const fishYPos = Math.floor(Math.random() * 100);
-    fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
-    fishArr.push(fish);
-    console.log(fish)
-  }
-  ctx.imageSmoothingEnabled = false;
-})
-
-// let gameStart = () => {
-//   console.log("game start clicked")
-//     cat = new Player(0, 130, playerSize, playerSize);
-//     for(let i = 0; i < 30; i++) {
-//       const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
-//       const fishYPos = Math.floor(Math.random() * 100);
-//       fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
-//       fishArr.push(fish);
-//       console.log(fish)
-//     }
-//     ctx.imageSmoothingEnabled = false;
-//     //setInterval(gameLoop, 100);
-    
-// }
-
-// let startBtn = document.querySelector('#michalle')
-// startBtn.addEventListener('click', () => {
-//   gameStart()
-//   // setInterval(gameLoop, 100);
+// window.addEventListener("DOMContentLoaded", function(e){
+//   cat = new Player(0, 130, playerSize, playerSize);
+//   for(let i = 0; i < fishLength; i++) {
+//     const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
+//     const fishYPos = Math.floor(Math.random() * 100);
+//     fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
+//     fishArr.push(fish);
+//     console.log(fish)
+//   }
+//   ctx.imageSmoothingEnabled = false;
 // })
 
-
-  function move(e){
-    switch (e.key){
-        case "ArrowUp":
-            cat.y > 0 ?  cat.y -= 10  :  null;
-            break
-        case "ArrowDown":
-            cat.y < (canvas.height - cat.height) ? cat.y += 10 : null;
-            break
-        case "ArrowLeft":
-            cat.x > 0 ? cat.x -= 10 : null;
-            break
-        case "ArrowRight":
-            cat.x < (canvas.width - cat.width) ? cat.x += 10 : null;
-            break
+let gameStart = () => {
+  console.log("game start clicked")
+    cat = new Player(0, 130, playerSize, playerSize);
+    for(let i = 0; i < 30; i++) {
+      const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
+      const fishYPos = Math.floor(Math.random() * 100);
+      fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
+      fishArr.push(fish);
+      console.log(fish)
     }
+    ctx.imageSmoothingEnabled = false;
+    //setInterval(gameLoop, 100);
+
+    function move(e){
+      switch (e.key){
+          case "ArrowUp":
+              cat.y > 0 ?  cat.y -= 10  :  null;
+              break
+          case "ArrowDown":
+              cat.y < (canvas.height - cat.height) ? cat.y += 10 : null;
+              break
+          case "ArrowLeft":
+              cat.x > 0 ? cat.x -= 10 : null;
+              break
+          case "ArrowRight":
+              cat.x < (canvas.width - cat.width) ? cat.x += 10 : null;
+              break
+      }
+    
+    }
+  
+  
+  function enemyFoodMove() {
+  
+    enemyFoods.forEach(function(food) {
+      food.foodYPos += food.foodYSpeed;
+  
+      if(food.foodYPos > canvas.height) {
+        food.foodYPos = 0 - food.foodSize;
+  
+        let foodEnemyPos = Math.floor(Math.random() * 6) + 1;
+        food.foodXPos = foodEnemyPos * (canvas.width / 6);
+        food.foodYSpeed = Math.floor(Math.random()*(12 - 4) + 4)
+      }
+    
+      if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
+        console.log('hit');
+        stopGame();
+        let gameLost = document.createElement('h3');
+        gameLost.textContent = 'You lost!';
+        scoreId.appendChild(gameLost)
+        // let playAgain = document.createElement('button');
+        // playAgain.id = 'play-again'
+        // playAgain.innerHTML = 'Play Again?'
+        // scoreId.appendChild(playAgain);
+        // playAgain.addEventListener('click', function() {
+        //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //   setInterval(gameLoop, 100);
+        // })
+      }
+  
+    });
   
   }
-
-
-function enemyFoodMove() {
-
-  enemyFoods.forEach(function(food) {
-    food.foodYPos += food.foodYSpeed;
-
-    if(food.foodYPos > canvas.height) {
-      food.foodYPos = 0 - food.foodSize;
-
-      let foodEnemyPos = Math.floor(Math.random() * 6) + 1;
-      food.foodXPos = foodEnemyPos * (canvas.width / 6);
-      food.foodYSpeed = Math.floor(Math.random()*(12 - 4) + 4)
+  
+  
+  
+  function fishCollision() {
+    fishArr.forEach(fish => {
+  
+    //if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
+      if(fish.y + fish.height > cat.y && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
+      const index = fishArr.indexOf(fish);
+      if (index > -1) {
+        fishArr.splice(index, 1);
+      }
+      console.log('hit');
+  
+      let gameScore = Number(score.textContent);
+      let newScore = gameScore + 50;
+          score.textContent = newScore;
+          if(fishArr.length === 0) {
+            let gameWon = document.createElement('h3');
+            gameWon.textContent = 'You Win!';
+            scoreId.appendChild(gameWon)
+            stopGame();
+            console.log(fish);
+            // let playAgain = document.createElement('button');
+            // playAgain = setAttribute('id', 'play-again');
+            // scoreId.appendChild(playAgain)
+          }
+    }
+    });
+  }
+  
+  
+  
+    
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+      cat.render();
+  
+  
+        fishArr.forEach(fish => {
+            fish.render();
+      })
+  
+      if(startingPos) {
+        for(let i = 0; i < totalEnimies; i++) {
+          makeEnemyFood();
+        }
+        startingPos = false;
+      }
+      fishCollision();
+      enemyFoodMove();
+      drawEnemyFood();
+  
     }
   
-    if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
-      console.log('hit');
-      stopGame();
-      let gameLost = document.createElement('h3');
-      gameLost.textContent = 'You lost!';
-      scoreId.appendChild(gameLost)
+    function makeEnemyFood() {
+      let foodEnemyPos = Math.floor(Math.random() * 6) + 1;
+      const foodSize = 15;
+      let foodXPos = foodEnemyPos * (canvas.width / 6);
+      let foodYPos = 0 - foodSize;
+      let foodXSpeed = 5;
+      let foodYSpeed = Math.floor(Math.random() * (12 - 4) + 4);
+      let enemyImage = new Image();
+      enemyImage.src = `images/enemy${Math.floor(Math.random()*3)}.png`;
+  
+      let food = {
+        foodXPos: foodXPos,
+        foodYPos: foodYPos,
+        foodSize: foodSize,
+        foodXSpeed: foodXSpeed,
+        foodYSpeed: foodYSpeed,
+        enemyImage: enemyImage
+      }
+  
+      enemyFoods.push(food);
+  
+    }
+  
+    function drawEnemyFood() {
+      enemyFoods.forEach(function(food) {
+        ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
+      })
+    }
+  
+  
+    let varName = setInterval(gameLoop, 100);
+    document.addEventListener("keydown", move)
+  
+    function stopGame() {
+      clearInterval(varName);
       // let playAgain = document.createElement('button');
       // playAgain.id = 'play-again'
       // playAgain.innerHTML = 'Play Again?'
       // scoreId.appendChild(playAgain);
       // playAgain.addEventListener('click', function() {
       //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+      //   fishArr.length = 0;
+      //   enemyFoods.length = 0;
       //   setInterval(gameLoop, 100);
+      //   //gameLoop();
+      //   gameStart();
       // })
     }
 
-  });
 
+    
 }
 
+let startBtn = document.querySelector('#michalle')
+startBtn.addEventListener('click', () => {
+  gameStart()
+  // setInterval(gameLoop, 100);
+})
 
 
-function fishCollision() {
-  fishArr.forEach(fish => {
+//   function move(e){
+//     switch (e.key){
+//         case "ArrowUp":
+//             cat.y > 0 ?  cat.y -= 10  :  null;
+//             break
+//         case "ArrowDown":
+//             cat.y < (canvas.height - cat.height) ? cat.y += 10 : null;
+//             break
+//         case "ArrowLeft":
+//             cat.x > 0 ? cat.x -= 10 : null;
+//             break
+//         case "ArrowRight":
+//             cat.x < (canvas.width - cat.width) ? cat.x += 10 : null;
+//             break
+//     }
+  
+//   }
 
-  //if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
-    if(fish.y + fish.height > cat.y && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
-    const index = fishArr.indexOf(fish);
-    if (index > -1) {
-      fishArr.splice(index, 1);
-    }
-    console.log('hit');
 
-    let gameScore = Number(score.textContent);
-    let newScore = gameScore + 50;
-        score.textContent = newScore;
-        if(fishArr.length === 0) {
-          let gameWon = document.createElement('h3');
-          gameWon.textContent = 'You Win!';
-          scoreId.appendChild(gameWon)
-          stopGame();
-          console.log(fish);
-          // let playAgain = document.createElement('button');
-          // playAgain = setAttribute('id', 'play-again');
-          // scoreId.appendChild(playAgain)
-        }
-  }
-  });
-}
+// function enemyFoodMove() {
+
+//   enemyFoods.forEach(function(food) {
+//     food.foodYPos += food.foodYSpeed;
+
+//     if(food.foodYPos > canvas.height) {
+//       food.foodYPos = 0 - food.foodSize;
+
+//       let foodEnemyPos = Math.floor(Math.random() * 6) + 1;
+//       food.foodXPos = foodEnemyPos * (canvas.width / 6);
+//       food.foodYSpeed = Math.floor(Math.random()*(12 - 4) + 4)
+//     }
+  
+//     if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
+//       console.log('hit');
+//       stopGame();
+//       let gameLost = document.createElement('h3');
+//       gameLost.textContent = 'You lost!';
+//       scoreId.appendChild(gameLost)
+//       // let playAgain = document.createElement('button');
+//       // playAgain.id = 'play-again'
+//       // playAgain.innerHTML = 'Play Again?'
+//       // scoreId.appendChild(playAgain);
+//       // playAgain.addEventListener('click', function() {
+//       //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+//       //   setInterval(gameLoop, 100);
+//       // })
+//     }
+
+//   });
+
+// }
+
+
+
+// function fishCollision() {
+//   fishArr.forEach(fish => {
+
+//   //if(fish.y > cat.y - cat.height+10 && cat.x + cat.width > fish.x) {
+//     if(fish.y + fish.height > cat.y && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
+//     const index = fishArr.indexOf(fish);
+//     if (index > -1) {
+//       fishArr.splice(index, 1);
+//     }
+//     console.log('hit');
+
+//     let gameScore = Number(score.textContent);
+//     let newScore = gameScore + 50;
+//         score.textContent = newScore;
+//         if(fishArr.length === 0) {
+//           let gameWon = document.createElement('h3');
+//           gameWon.textContent = 'You Win!';
+//           scoreId.appendChild(gameWon)
+//           stopGame();
+//           console.log(fish);
+//           // let playAgain = document.createElement('button');
+//           // playAgain = setAttribute('id', 'play-again');
+//           // scoreId.appendChild(playAgain)
+//         }
+//   }
+//   });
+// }
 
 
 
   
-  function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+//   function gameLoop() {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    cat.render();
-
-
-      fishArr.forEach(fish => {
-          fish.render();
-    })
-
-    if(startingPos) {
-      for(let i = 0; i < totalEnimies; i++) {
-        makeEnemyFood();
-      }
-      startingPos = false;
-    }
-    fishCollision();
-    enemyFoodMove();
-    drawEnemyFood();
-
-  }
-
-  function makeEnemyFood() {
-    let foodEnemyPos = Math.floor(Math.random() * 6) + 1;
-    const foodSize = 15;
-    let foodXPos = foodEnemyPos * (canvas.width / 6);
-    let foodYPos = 0 - foodSize;
-    let foodXSpeed = 5;
-    let foodYSpeed = Math.floor(Math.random() * (12 - 4) + 4);
-    let enemyImage = new Image();
-    enemyImage.src = `images/enemy${Math.floor(Math.random()*3)}.png`;
-
-    let food = {
-      foodXPos: foodXPos,
-      foodYPos: foodYPos,
-      foodSize: foodSize,
-      foodXSpeed: foodXSpeed,
-      foodYSpeed: foodYSpeed,
-      enemyImage: enemyImage
-    }
-
-    enemyFoods.push(food);
-
-  }
-
-  function drawEnemyFood() {
-    enemyFoods.forEach(function(food) {
-      ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
-    })
-  }
+//     cat.render();
 
 
-  let varName = setInterval(gameLoop, 100);
-  document.addEventListener("keydown", move)
+//       fishArr.forEach(fish => {
+//           fish.render();
+//     })
 
-  function stopGame() {
-    clearInterval(varName);
-    // let playAgain = document.createElement('button');
-    // playAgain.id = 'play-again'
-    // playAgain.innerHTML = 'Play Again?'
-    // scoreId.appendChild(playAgain);
-    // playAgain.addEventListener('click', function() {
-    //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //   fishArr.length = 0;
-    //   enemyFoods.length = 0;
-    //   setInterval(gameLoop, 100);
-    //   //gameLoop();
-    //   gameStart();
-    // })
-  }
+//     if(startingPos) {
+//       for(let i = 0; i < totalEnimies; i++) {
+//         makeEnemyFood();
+//       }
+//       startingPos = false;
+//     }
+//     fishCollision();
+//     enemyFoodMove();
+//     drawEnemyFood();
+
+//   }
+
+//   function makeEnemyFood() {
+//     let foodEnemyPos = Math.floor(Math.random() * 6) + 1;
+//     const foodSize = 15;
+//     let foodXPos = foodEnemyPos * (canvas.width / 6);
+//     let foodYPos = 0 - foodSize;
+//     let foodXSpeed = 5;
+//     let foodYSpeed = Math.floor(Math.random() * (12 - 4) + 4);
+//     let enemyImage = new Image();
+//     enemyImage.src = `images/enemy${Math.floor(Math.random()*3)}.png`;
+
+//     let food = {
+//       foodXPos: foodXPos,
+//       foodYPos: foodYPos,
+//       foodSize: foodSize,
+//       foodXSpeed: foodXSpeed,
+//       foodYSpeed: foodYSpeed,
+//       enemyImage: enemyImage
+//     }
+
+//     enemyFoods.push(food);
+
+//   }
+
+//   function drawEnemyFood() {
+//     enemyFoods.forEach(function(food) {
+//       ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
+//     })
+//   }
+
+
+//   let varName = setInterval(gameLoop, 100);
+//   document.addEventListener("keydown", move)
+
+//   function stopGame() {
+//     clearInterval(varName);
+//     // let playAgain = document.createElement('button');
+//     // playAgain.id = 'play-again'
+//     // playAgain.innerHTML = 'Play Again?'
+//     // scoreId.appendChild(playAgain);
+//     // playAgain.addEventListener('click', function() {
+//     //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     //   fishArr.length = 0;
+//     //   enemyFoods.length = 0;
+//     //   setInterval(gameLoop, 100);
+//     //   //gameLoop();
+//     //   gameStart();
+//     // })
+//   }
 
 
 
