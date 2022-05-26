@@ -7,16 +7,13 @@ body {
     text-align: center;
     background-color: black;
     font-family: 'Press Start 2P';
+    /* text-transform: uppercase; */
 }
 
 h1 {
     color: #F8CB2E;
+    text-transform: uppercase;
 }
-
-/* canvas {
-    width: 316px;
-    height: 158px;
-} */
 
 main {
     grid-area: canvas;
@@ -39,7 +36,7 @@ main {
 	color: white;
 	cursor: pointer;
 	display: inline-block;
-	font-size: 2rem;
+	font-size: 1rem;
 	margin: 1rem;
 	min-width: 200px;
 	padding: .5rem;
@@ -48,5 +45,21 @@ main {
 }
 
 .btnGame {
-    background: #A9294F;
+    background: #54123B;
+}
+
+h2 {
+    font-family: 'Geo';
+    color: #F8CB2E;
+    font-size: 40px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+p {
+    font-family: 'Geo';
+    color: #F8CB2E;
+    margin: auto;
+    width: 50%;
+    font-size: 20px;
 }

@@ -32,7 +32,7 @@ let foodYSpeed = 5;
 let enemyImage = new Image();
 enemyImage.src = `images/enemy${Math.floor(Math.random()*3)}.png`
 let startingPos = true;
-let totalEnimies = 15;
+let totalEnimies = 20;
 let enemyFoods = [];
 
 const playerSize = 50;
@@ -206,7 +206,7 @@ let gameStart = () => {
     }
   
   
-    let varName = setInterval(gameLoop, 60);
+    let varName = setInterval(gameLoop, 55);
     document.addEventListener("keydown", move)
   
     function stopGame() {
