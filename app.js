@@ -244,17 +244,25 @@ let gameStart = () => {
       //   setInterval(gameLoop, 100);
       //   //gameLoop();
       //   gameStart();
+      //   if(startingPos) {
+      //     for(let i = 0; i < totalEnimies; i++) {
+      //       makeEnemyFood();
+      //     }
+      //     startingPos = false;
+      //   }
+      //   fishCollision();
+      //   enemyFoodMove();
+      //   drawEnemyFood();
+      //   playAgain.style.display = 'none';
       // })
     }
-
-
-    
 }
 
 let startBtn = document.querySelector('#michalle')
 startBtn.addEventListener('click', () => {
   gameStart()
   // setInterval(gameLoop, 100);
+  startBtn.style.display = 'none'
 })
 
 
