@@ -60,38 +60,38 @@ class Player {
   }
 
 
-// window.addEventListener("DOMContentLoaded", function(e){
-//   cat = new Player(0, 130, playerSize, playerSize);
-//   for(let i = 0; i < 30; i++) {
-//     const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
-//     const fishYPos = Math.floor(Math.random() * 100);
-//     fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
-//     fishArr.push(fish);
-//     console.log(fish)
-//   }
-//   ctx.imageSmoothingEnabled = false;
-// })
-
-let gameStart = () => {
-  console.log("game start clicked")
-    cat = new Player(0, 130, playerSize, playerSize);
-    for(let i = 0; i < 30; i++) {
-      const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
-      const fishYPos = Math.floor(Math.random() * 100);
-      fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
-      fishArr.push(fish);
-      console.log(fish)
-    }
-    ctx.imageSmoothingEnabled = false;
-    //setInterval(gameLoop, 100);
-    
-}
-
-let startBtn = document.querySelector('#zohaib')
-startBtn.addEventListener('click', () => {
-  gameStart()
-  // setInterval(gameLoop, 100);
+window.addEventListener("DOMContentLoaded", function(e){
+  cat = new Player(0, 130, playerSize, playerSize);
+  for(let i = 0; i < 30; i++) {
+    const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
+    const fishYPos = Math.floor(Math.random() * 100);
+    fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
+    fishArr.push(fish);
+    console.log(fish)
+  }
+  ctx.imageSmoothingEnabled = false;
 })
+
+// let gameStart = () => {
+//   console.log("game start clicked")
+//     cat = new Player(0, 130, playerSize, playerSize);
+//     for(let i = 0; i < 30; i++) {
+//       const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
+//       const fishYPos = Math.floor(Math.random() * 100);
+//       fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
+//       fishArr.push(fish);
+//       console.log(fish)
+//     }
+//     ctx.imageSmoothingEnabled = false;
+//     //setInterval(gameLoop, 100);
+    
+// }
+
+// let startBtn = document.querySelector('#michalle')
+// startBtn.addEventListener('click', () => {
+//   gameStart()
+//   // setInterval(gameLoop, 100);
+// })
 
 
   function move(e){
@@ -164,7 +164,7 @@ function fishCollision() {
         if(fishArr.length === 0 && newScore === 1500) {
           let gameWon = document.createElement('h3');
           gameWon.textContent = 'You Win!';
-          scoreId.appendChild(gameLost)
+          scoreId.appendChild(gameWon)
           stopGame();
           // let playAgain = document.createElement('button');
           // playAgain = setAttribute('id', 'play-again');
@@ -233,17 +233,19 @@ function fishCollision() {
   document.addEventListener("keydown", move)
 
   function stopGame() {
-    window.clearInterval(varName);
-    let playAgain = document.createElement('button');
-    playAgain.id = 'play-again'
-    playAgain.innerHTML = 'Play Again?'
-    scoreId.appendChild(playAgain);
-    playAgain.addEventListener('click', function() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      //setInterval(gameLoop, 100);
-      gameLoop();
-      gameStart();
-    })
+    clearInterval(varName);
+    // let playAgain = document.createElement('button');
+    // playAgain.id = 'play-again'
+    // playAgain.innerHTML = 'Play Again?'
+    // scoreId.appendChild(playAgain);
+    // playAgain.addEventListener('click', function() {
+    //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //   fishArr.length = 0;
+    //   enemyFoods.length = 0;
+    //   setInterval(gameLoop, 100);
+    //   //gameLoop();
+    //   gameStart();
+    // })
   }
 
 
