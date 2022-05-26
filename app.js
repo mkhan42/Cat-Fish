@@ -59,10 +59,16 @@ class Player {
     };
   }
 
+  function generateRandomInteger(min, max) {
+    return Math.floor(min + Math.random()*(max - min + 1))
+  }
+
+  let fishLength = generateRandomInteger(30, 100);
+
 
 window.addEventListener("DOMContentLoaded", function(e){
   cat = new Player(0, 130, playerSize, playerSize);
-  for(let i = 0; i < 30; i++) {
+  for(let i = 0; i < fishLength; i++) {
     const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
     const fishYPos = Math.floor(Math.random() * 100);
     fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
@@ -162,11 +168,12 @@ function fishCollision() {
     let gameScore = Number(score.textContent);
     let newScore = gameScore + 50;
         score.textContent = newScore;
-        if(fishArr.length === 0 && newScore === 1500) {
+        if(fishArr.length === 0) {
           let gameWon = document.createElement('h3');
           gameWon.textContent = 'You Win!';
           scoreId.appendChild(gameWon)
           stopGame();
+          console.log(fish);
           // let playAgain = document.createElement('button');
           // playAgain = setAttribute('id', 'play-again');
           // scoreId.appendChild(playAgain)
