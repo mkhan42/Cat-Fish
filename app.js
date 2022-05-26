@@ -108,7 +108,7 @@ let gameStart = () => {
       if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
         console.log('hit');
         let gameLost = document.createElement('h3');
-        gameLost.textContent = 'You lost!';
+        gameLost.textContent = 'Cat got scared by the fruits and vegtables. You lost!';
         scoreId.appendChild(gameLost)
         stopGame();
       }
@@ -127,7 +127,7 @@ let gameStart = () => {
           score.textContent = newScore;
           if(fishArr.length === 0) {
             let gameWon = document.createElement('h3');
-            gameWon.textContent = 'You Win!';
+            gameWon.textContent = 'Cat caught all the fish! You Win!';
             scoreId.appendChild(gameWon)
             stopGame();
           }
