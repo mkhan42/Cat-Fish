@@ -5,8 +5,10 @@ let scoreId = document.querySelector('#score')
 let cat;
 let fish;
 let fishArr = [];
-let fishXPos = Math.floor(Math.random() * (canvas.width - 15));
-let fishYPos = Math.floor(Math.random() * 100);
+// let fishXPos = Math.floor(Math.random() * (canvas.width - 15));
+// let fishYPos = Math.floor(Math.random() * 100);
+let fishXPos;
+let fishYPos;
 const fishSize = 15;
 canvas.style.background = '#571FF1';
 canvas.style.border = '8px solid #54123B';
@@ -58,16 +60,37 @@ class Player {
   }
 
 
-window.addEventListener("DOMContentLoaded", function(e){
-  cat = new Player(0, 130, playerSize, playerSize);
-  for(let i = 0; i < 30; i++) {
-    const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
-    const fishYPos = Math.floor(Math.random() * 100);
-    fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
-    fishArr.push(fish);
-    console.log(fish)
-  }
-  ctx.imageSmoothingEnabled = false;
+// window.addEventListener("DOMContentLoaded", function(e){
+//   cat = new Player(0, 130, playerSize, playerSize);
+//   for(let i = 0; i < 30; i++) {
+//     const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
+//     const fishYPos = Math.floor(Math.random() * 100);
+//     fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
+//     fishArr.push(fish);
+//     console.log(fish)
+//   }
+//   ctx.imageSmoothingEnabled = false;
+// })
+
+let gameStart = () => {
+  console.log("game start clicked")
+    cat = new Player(0, 130, playerSize, playerSize);
+    for(let i = 0; i < 30; i++) {
+      const fishXPos = Math.floor(Math.random() * (canvas.width - 15));
+      const fishYPos = Math.floor(Math.random() * 100);
+      fish = new Fishies(fishXPos, fishYPos, fishSize, fishSize, i);
+      fishArr.push(fish);
+      console.log(fish)
+    }
+    ctx.imageSmoothingEnabled = false;
+    //setInterval(gameLoop, 100);
+    
+}
+
+let startBtn = document.querySelector('#zohaib')
+startBtn.addEventListener('click', () => {
+  gameStart()
+  // setInterval(gameLoop, 100);
 })
 
 
@@ -109,15 +132,21 @@ function enemyFoodMove() {
       let gameLost = document.createElement('h3');
       gameLost.textContent = 'You lost!';
       scoreId.appendChild(gameLost)
-      let playAgain = document.createElement('button');
-          playAgain.innerHTML = 'Play Again?'
-          scoreId.appendChild(playAgain)
-  
+      // let playAgain = document.createElement('button');
+      // playAgain.id = 'play-again'
+      // playAgain.innerHTML = 'Play Again?'
+      // scoreId.appendChild(playAgain);
+      // playAgain.addEventListener('click', function() {
+      //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+      //   setInterval(gameLoop, 100);
+      // })
     }
 
   });
 
 }
+
+
 
 function fishCollision() {
   fishArr.forEach(fish => {
@@ -137,9 +166,9 @@ function fishCollision() {
           gameWon.textContent = 'You Win!';
           scoreId.appendChild(gameLost)
           stopGame();
-          let playAgain = document.createElement('button');
-          playAgain = setAttribute('id', 'play-again');
-          scoreId.appendChild(playAgain)
+          // let playAgain = document.createElement('button');
+          // playAgain = setAttribute('id', 'play-again');
+          // scoreId.appendChild(playAgain)
         }
   }
   });
@@ -204,7 +233,17 @@ function fishCollision() {
   document.addEventListener("keydown", move)
 
   function stopGame() {
-    clearInterval(varName);
+    window.clearInterval(varName);
+    let playAgain = document.createElement('button');
+    playAgain.id = 'play-again'
+    playAgain.innerHTML = 'Play Again?'
+    scoreId.appendChild(playAgain);
+    playAgain.addEventListener('click', function() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      //setInterval(gameLoop, 100);
+      gameLoop();
+      gameStart();
+    })
   }
 
 
