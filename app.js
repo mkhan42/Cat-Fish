@@ -2,6 +2,7 @@ let canvas = document.querySelector("#canvas");
 let ctx = canvas.getContext("2d");
 let score = document.querySelector('#fish-score');
 let scoreId = document.querySelector('#score')
+let instructions = document.querySelector('#instructions-id')
 let cat;
 let fish;
 let fishArr = [];
@@ -227,6 +228,7 @@ startBtn.addEventListener('click', () => {
   // setInterval(gameLoop, 100);
   startBtn.style.display = 'none'
   scoreId.style.display = 'block'
+  instructions.style.display = 'none'
 })
 
 
