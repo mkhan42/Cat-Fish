@@ -21,7 +21,8 @@ main {
     display: none;
 }
 
-.btn
+
+button
 {
     font-family: 'Press Start 2P';
     background: #7C7C7C;
@@ -39,9 +40,6 @@ main {
 	padding: .5rem;
 	text-transform: uppercase;
 	width: auto;
-}
-
-.btnGame {
     background: #54123B;
 }
 
