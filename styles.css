@@ -43,6 +43,10 @@ button
     background: #54123B;
 }
 
+button:hover {
+    background-color: #B8405E;
+}
+
 h2 {
     font-family: 'Geo';
     color: #F8CB2E;
