@@ -21,7 +21,9 @@ main {
     display: none;
 }
 
-
+/* Button  design was inspired by this css codepen below:
+https://codepen.io/Brandon-Stoyles/pen/RajYmd 
+*/
 button
 {
     font-family: 'Press Start 2P';

@@ -34,6 +34,7 @@ let startingPos = true;
 let totalEnimies = 20;
 let enemyFoods = [];
 
+//used to create the cat player on to the canvas
 class Player {
     constructor(x, y, width, height) {
     this.x = x;
@@ -47,6 +48,7 @@ class Player {
     };
   }
 
+  //useed to create fishies on to the canvas
   class Fishies {
     constructor(x, y, width, height, id) {
     this.x = x;
@@ -61,13 +63,14 @@ class Player {
     };
   }
 
-
+//random number range function
 function generateRandomInteger(min, max) {
     return Math.floor(min + Math.random()*(max - min + 1))
 }
 
 let fishLength = generateRandomInteger(30,100);
 
+//function that stores almost everything which will then be later called in an onclick to start the game
 let gameStart = () => {
     cat = new Player(0, 350, playerSize, playerSize);
     ctx.imageSmoothingEnabled = false;
@@ -79,6 +82,7 @@ let gameStart = () => {
       ctx.imageSmoothingEnabled = false;
     }
 
+    //function to use the keys to make the cat move
     function move(e){
       switch (e.key){
           case "ArrowUp":
@@ -95,7 +99,29 @@ let gameStart = () => {
               break
       }
     }
+
+    //detecting fish collusion and win condition
+    function fishCollision() {
+      fishArr.forEach(fish => {
+        if(fish.y + fish.height > cat.y && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
+        const index = fishArr.indexOf(fish);
+        if (index > -1) {
+          fishArr.splice(index, 1);
+        }
+        let gameScore = Number(score.textContent);
+        let newScore = gameScore + 50;
+        score.textContent = newScore;
+        if(fishArr.length === 0) {
+        let gameWon = document.createElement('h3');
+        gameWon.textContent = 'Cat caught all the fish! You Win!';
+        scoreId.appendChild(gameWon)
+        stopGame();
+        }
+        } 
+      });
+    }
   
+  //function that makes the enimies actually move at different speeds on random positions in that canvas
   function enemyFoodMove() {
     enemyFoods.forEach(function(food) {
       food.foodYPos += food.foodYSpeed;
@@ -105,6 +131,8 @@ let gameStart = () => {
         food.foodXPos = foodEnemyPos * (canvas.width / 8);
         food.foodYSpeed = Math.floor(Math.random()*(18 - 10) + 10)
       }
+
+      //colluision detection and lose condition
       if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
         console.log('hit');
         let gameLost = document.createElement('h3');
@@ -114,27 +142,38 @@ let gameStart = () => {
       }
     });
   }
-  
-  function fishCollision() {
-    fishArr.forEach(fish => {
-      if(fish.y + fish.height > cat.y && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
-      const index = fishArr.indexOf(fish);
-      if (index > -1) {
-        fishArr.splice(index, 1);
-      }
-      let gameScore = Number(score.textContent);
-      let newScore = gameScore + 50;
-      score.textContent = newScore;
-      if(fishArr.length === 0) {
-      let gameWon = document.createElement('h3');
-      gameWon.textContent = 'Cat caught all the fish! You Win!';
-      scoreId.appendChild(gameWon)
-      stopGame();
-      }
-      } 
-    });
+
+  //Creating an object of enemies and pushing it onto array
+  function makeEnemyFood() {
+    let foodEnemyPos = Math.floor(Math.random() * 8) + 1;
+    const foodSize = 40;
+    let foodXPos = foodEnemyPos * (canvas.width / 8);
+    let foodYPos = 0 - foodSize;
+    let foodXSpeed = 5;
+    let foodYSpeed = Math.floor(Math.random() * (16 - 8) + 8);
+    let enemyImage = new Image();
+    enemyImage.src = `images/enemy${Math.floor(Math.random()*3)}.png`;
+    
+    let food = {
+      foodXPos: foodXPos,
+      foodYPos: foodYPos,
+      foodSize: foodSize,
+      foodXSpeed: foodXSpeed,
+      foodYSpeed: foodYSpeed,
+      enemyImage: enemyImage
+    }
+    enemyFoods.push(food);
+  }
+
+  //drawing the enemies array using a forEach statement.
+  function drawEnemyFood() {
+    enemyFoods.forEach(function(food) {
+      ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
+      ctx.imageSmoothingEnabled = false;
+    })
   }
   
+  //renders everything on to the screen
   function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     cat.render();
@@ -153,38 +192,11 @@ let gameStart = () => {
       enemyFoodMove();
       drawEnemyFood();
     }
-  
-    function makeEnemyFood() {
-      let foodEnemyPos = Math.floor(Math.random() * 8) + 1;
-      const foodSize = 40;
-      let foodXPos = foodEnemyPos * (canvas.width / 8);
-      let foodYPos = 0 - foodSize;
-      let foodXSpeed = 5;
-      let foodYSpeed = Math.floor(Math.random() * (16 - 8) + 8);
-      let enemyImage = new Image();
-      enemyImage.src = `images/enemy${Math.floor(Math.random()*3)}.png`;
-      
-      let food = {
-        foodXPos: foodXPos,
-        foodYPos: foodYPos,
-        foodSize: foodSize,
-        foodXSpeed: foodXSpeed,
-        foodYSpeed: foodYSpeed,
-        enemyImage: enemyImage
-      }
-      enemyFoods.push(food);
-    }
-  
-    function drawEnemyFood() {
-      enemyFoods.forEach(function(food) {
-        ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
-        ctx.imageSmoothingEnabled = false;
-      })
-    }
-  
+
     let loopInterval = setInterval(gameLoop, 55);
     document.addEventListener("keydown", move)
   
+    //stops the game by clearing the interval
     function stopGame() {
       clearInterval(loopInterval);
       let playAgain = document.createElement('button');
@@ -197,6 +209,7 @@ let gameStart = () => {
     }
 }
 
+//starts the game
 let startBtn = document.querySelector('#michalle')
 startBtn.addEventListener('click', () => {
   gameStart()
