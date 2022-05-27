@@ -78,7 +78,7 @@ The collusion detections also include the <mark>stopGame()<mark> function, which
 
 Lastly, the player is able to play the game by using the up, down, left, and right keys on the computer. This is able to occur because of the <mark>move()</mark> function. The move function uses conditionals to detect what keys were pressed, and the also has constraints so that the cat wont be able to move too far down or above, or too far right or left of the canvas.
 
-![keys](./images/key.png)
+![keys](./images/keys.png)
 
 
 WireFrames and PseudoCode
