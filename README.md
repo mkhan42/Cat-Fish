@@ -78,9 +78,12 @@ The collusion detections also include the <mark>stopGame()<mark> function, which
 
 Lastly, the player is able to play the game by using the up, down, left, and right keys on the computer. This is able to occur because of the <mark>move()</mark> function. The move function uses conditionals to detect what keys were pressed, and the also has constraints so that the cat wont be able to move too far down or above, or too far right or left of the canvas.
 
-![keys](./images/key.png)
+![keys](./images/keys.png)
 
 
 WireFrames and PseudoCode
 ![Wireframe](https://user-images.githubusercontent.com/76133352/169736219-06f6f6bd-6243-466b-9a34-577a6febe6ae.png)
 ![Psedocode](https://user-images.githubusercontent.com/76133352/169736239-bfacce13-14f2-4387-85c4-9a433ac64bb9.png)
+
+# Future Considerations
+Some future considerations to implement would be to create different levels and having a life system. The levels can include one level of having to catch fishes that move, and another one could be having to catch a certain amount of fishes within a timer. Another consideration that I am thinking about is making the game more like Pac-Man, and creating a maze, having the fruits and vegtables chase/follow the cat, and having a glowing fish that makes the fruits and vegtables edible for a quick second. I would also love to add sound to the game.
