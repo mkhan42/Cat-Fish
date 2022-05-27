@@ -66,7 +66,7 @@ function generateRandomInteger(min, max) {
     return Math.floor(min + Math.random()*(max - min + 1))
 }
 
-let fishLength = generateRandomInteger(30, 200);
+let fishLength = generateRandomInteger(30,100);
 
 let gameStart = () => {
     cat = new Player(0, 350, playerSize, playerSize);
