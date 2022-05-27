@@ -124,14 +124,14 @@ let gameStart = () => {
       }
       let gameScore = Number(score.textContent);
       let newScore = gameScore + 50;
-          score.textContent = newScore;
-          if(fishArr.length === 0) {
-            let gameWon = document.createElement('h3');
-            gameWon.textContent = 'Cat caught all the fish! You Win!';
-            scoreId.appendChild(gameWon)
-            stopGame();
-          }
-        } 
+      score.textContent = newScore;
+      if(fishArr.length === 0) {
+      let gameWon = document.createElement('h3');
+      gameWon.textContent = 'Cat caught all the fish! You Win!';
+      scoreId.appendChild(gameWon)
+      stopGame();
+      }
+      } 
     });
   }
   
