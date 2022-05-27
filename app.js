@@ -21,7 +21,7 @@ let fishXPos;
 let fishYPos;
 const fishSize = 40;
 const fishImage = new Image();
-fishImage.src = `images/fish${Math.floor(Math.random()*6)}.png`;
+fishImage.src = `images/fish${Math.floor(Math.random()*7)}.png`;
 
 const foodSize = 40;
 let foodXPos = Math.floor(Math.random() * (canvas.width - foodSize));
