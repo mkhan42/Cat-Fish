@@ -34,6 +34,8 @@ let startingPos = true;
 let totalEnimies = 20;
 let enemyFoods = [];
 
+let state = false;
+
 //used to create the cat player on to the canvas
 class Player {
     constructor(x, y, width, height) {
@@ -134,11 +136,13 @@ let gameStart = () => {
 
       //colluision detection and lose condition
       if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
-        console.log('hit');
-        let gameLost = document.createElement('h3');
-        gameLost.textContent = 'Cat got scared by the fruits and vegtables. You lost!';
-        scoreId.appendChild(gameLost)
-        stopGame();
+        while(!state) {
+          let gameLost = document.createElement('h3');
+          gameLost.textContent = 'Cat got scared by the fruits and vegtables. You lost!';
+          scoreId.appendChild(gameLost)
+          stopGame();
+          state = true;
+        }
       }
     });
   }
