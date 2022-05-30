@@ -1,6 +1,8 @@
 # Cat Fish
 SEI 5/9 Project 1: Cat Fish </br>
-This game was inspired by the idea of Pac-Man and my cats, who are scared of certain fruits.
+This game was inspired by the idea of Pac-Man and my cats, who are scared of certain fruits. 
+<br>
+https://mkhan42.github.io/Cat-Fish/
 
 # User Story
 The goal of the game is to move the cat around to catch all the fish on the board. The cat has to avoid touching the fruits and vegtables falling doown from the top of the game board, as that will cause the user to lose the game because cats are scared of certain fruits and vegtables. Every time a fish is caught, the score goes up. Everytime the game refreshes, there will always be a different kind of fish on the board.
