@@ -23,18 +23,18 @@ const fishSize = 40;
 const fishImage = new Image();
 fishImage.src = `images/fish${Math.floor(Math.random()*7)}.png`;
 
-const foodSize = 40;
-let foodXPos = Math.floor(Math.random() * (canvas.width - foodSize));
-let foodYPos = 0;
-let foodXSpeed = 5;
-let foodYSpeed = 5;
-let enemyImage = new Image();
-enemyImage.src = `images/enemy${Math.floor(Math.random()*3)}.png`
 let startingPos = true;
 let totalEnimies = 20;
 let enemyFoods = [];
 
 let state = false;
+
+//random number range function
+function generateRandomInteger(min, max) {
+    return Math.floor(min + Math.random()*(max - min + 1))
+}
+
+let fishLength = generateRandomInteger(30,100);
 
 //used to create the cat player on to the canvas
 class Player {
@@ -65,12 +65,6 @@ class Player {
     };
   }
 
-//random number range function
-function generateRandomInteger(min, max) {
-    return Math.floor(min + Math.random()*(max - min + 1))
-}
-
-let fishLength = generateRandomInteger(30,100);
 
 //function that stores almost everything which will then be later called in an onclick to start the game
 let gameStart = () => {
@@ -106,64 +100,36 @@ let gameStart = () => {
     function fishCollision() {
       fishArr.forEach(fish => {
         if(fish.y + fish.height > cat.y && fish.y < cat.y + cat.height && fish.x + fish.width > cat.x && fish.x < cat.x + cat.width) {
-        const index = fishArr.indexOf(fish);
-        if (index > -1) {
-          fishArr.splice(index, 1);
+          const index = fishArr.indexOf(fish);
+          if (index > -1) {
+            fishArr.splice(index, 1);
+          }
+          let gameScore = Number(score.textContent);
+          let newScore = gameScore + 50;
+          score.textContent = newScore;
+          if(fishArr.length === 0) {
+            let gameWon = document.createElement('h3');
+            gameWon.textContent = 'Cat caught all the fish! You Win!';
+            scoreId.appendChild(gameWon)
+            stopGame();
+          }
         }
-        let gameScore = Number(score.textContent);
-        let newScore = gameScore + 50;
-        score.textContent = newScore;
-        if(fishArr.length === 0) {
-        let gameWon = document.createElement('h3');
-        gameWon.textContent = 'Cat caught all the fish! You Win!';
-        scoreId.appendChild(gameWon)
-        stopGame();
-        }
-        } 
       });
     }
-  
-  //function that makes the enimies actually move at different speeds on random positions in that canvas
-  function enemyFoodMove() {
-    enemyFoods.forEach(function(food) {
-      food.foodYPos += food.foodYSpeed;
-      if(food.foodYPos > canvas.height) {
-        food.foodYPos = 0 - food.foodSize;
-        let foodEnemyPos = Math.floor(Math.random() * 8) + 1;
-        food.foodXPos = foodEnemyPos * (canvas.width / 8);
-        food.foodYSpeed = Math.floor(Math.random()*(18 - 10) + 10)
-      }
-
-      //colluision detection and lose condition
-      if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
-        while(!state) {
-          let gameLost = document.createElement('h3');
-          gameLost.textContent = 'Cat got scared by the fruits and vegtables. You lost!';
-          scoreId.appendChild(gameLost)
-          stopGame();
-          state = true;
-        }
-      }
-    });
-  }
 
   //Creating an object of enemies and pushing it onto array
   function makeEnemyFood() {
     let foodEnemyPos = Math.floor(Math.random() * 8) + 1;
     const foodSize = 40;
-    let foodXPos = foodEnemyPos * (canvas.width / 8);
-    let foodYPos = 0 - foodSize;
-    let foodXSpeed = 5;
-    let foodYSpeed = Math.floor(Math.random() * (16 - 8) + 8);
     let enemyImage = new Image();
     enemyImage.src = `images/enemy${Math.floor(Math.random()*3)}.png`;
     
     let food = {
-      foodXPos: foodXPos,
-      foodYPos: foodYPos,
+      foodXPos: foodEnemyPos * (canvas.width / 8),
+      foodYPos: 0 - foodSize,
       foodSize: foodSize,
-      foodXSpeed: foodXSpeed,
-      foodYSpeed: foodYSpeed,
+      foodXSpeed: 5,
+      foodYSpeed: Math.floor(Math.random() * 8 + 10),
       enemyImage: enemyImage
     }
     enemyFoods.push(food);
@@ -175,6 +141,30 @@ let gameStart = () => {
       ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
       ctx.imageSmoothingEnabled = false;
     })
+  }
+
+  //function that makes the enimies actually move at different speeds on random positions in that canvas
+  function enemyFoodMove() {
+    enemyFoods.forEach(function(food) {
+      food.foodYPos += food.foodYSpeed;
+      if(food.foodYPos > canvas.height) {
+        food.foodYPos = 0 - food.foodSize;
+        let foodEnemyPos = Math.floor(Math.random() * 8) + 1;
+        food.foodXPos = foodEnemyPos * (canvas.width / 8);
+        food.foodYSpeed = Math.floor(Math.random()*8 + 10)
+      }
+  
+      //colluision detection and lose condition
+      if(food.foodYPos + food.foodSize > cat.y && food.foodYPos < cat.y + playerSize && food.foodXPos + food.foodSize > cat.x && food.foodXPos < cat.x + playerSize) {
+        while(!state) {
+          let gameLost = document.createElement('h3');
+          gameLost.textContent = 'Cat got scared by the fruits and vegtables. You lost!';
+          scoreId.appendChild(gameLost)
+          stopGame();
+          state = true;
+        }
+      }
+    });
   }
   
   //renders everything on to the screen
@@ -197,7 +187,7 @@ let gameStart = () => {
       drawEnemyFood();
     }
 
-    let loopInterval = setInterval(gameLoop, 55);
+    let loopInterval = setInterval(gameLoop, 50);
     document.addEventListener("keydown", move)
   
     //stops the game by clearing the interval
