@@ -135,7 +135,7 @@ let gameStart = () => {
     enemyFoods.push(food);
   }
 
-  //drawing the enemies array using a forEach statem
+  //drawing the enemies array using a forEach statement.
   function drawEnemyFood() {
     enemyFoods.forEach(function(food) {
       ctx.drawImage(food.enemyImage, food.foodXPos, food.foodYPos, food.foodSize, food.foodSize)
